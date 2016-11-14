@@ -28,6 +28,7 @@ var settings = require('./config/settings.json');
 // Database connections
 //======================================================================
 
+mongoose.Promise = global.Promise;
 var db = mongoose.connect(settings.ConnectionUrl).conenction;
 
 //======================================================================

@@ -32,12 +32,12 @@ var userSchema = new Schema({
 //======================================================================
 
 
-userSchema.methods.encrypt = function(password) {
-    return bcrypt.hashSync(password, bcrypt.genSaltSync(3), null);
+userSchema.statics.encrypt = function(password) {
+    return bcrypt.hashSync(password);
 };
 
-userSchema.methods.validate = function(password) {
-    return bcrypt.compareSync(password, this.password);
+userSchema.statics.validate = function(password,hash) {
+    return bcrypt.compareSync(password,hash);
 };
 
 //======================================================================
