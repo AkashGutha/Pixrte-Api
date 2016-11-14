@@ -6,16 +6,17 @@ var Schema = mongoose.Schema;
 //======================================================================
 
 var tokenSchema = new Schema({
-	value: {
+	
+	username: {
 		type: String,
 		required: true,
 		index: true,
 		unique: true
 	},
-	username: {
+	value: {
 		type: String,
 		required: true
 	}
 });
 
-module.exports = mongoose.model('Token', schema);
+module.exports = mongoose.model('Token', tokenSchema);

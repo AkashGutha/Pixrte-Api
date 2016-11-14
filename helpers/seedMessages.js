@@ -23,8 +23,13 @@ exports.UserCreated = {
     message: 'User created sucesfully'
 };
 
+exports.MissingCredentials = {
+    success: false,
+    message: 'Missing credentials'
+};
+
 //======================================================================
-// User account related messages
+// PAssword related messages
 //======================================================================
 
 exports.PasswordMatchFailure = {
@@ -34,7 +39,7 @@ exports.PasswordMatchFailure = {
 
 
 //======================================================================
-// User account related messages
+// Token related messages
 //======================================================================
 
 exports.TokenCreated = function (token) {
@@ -44,6 +49,17 @@ exports.TokenCreated = function (token) {
         token: token
     }
 };
+
+exports.TokenAuthFailed = {
+    success: false,
+    message: 'Token authentication failed'
+};
+
+exports.TokenNotFound = {
+    success: false,
+    message: "Token not found"
+};
+
 
 
 

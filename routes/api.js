@@ -2,55 +2,15 @@ var express = require('express');
 var api = express.Router();
 var jwt = require('jsonwebtoken');
 
+var seeds = require('../helpers/seedMessages');
 var User = require('../models/User');
+var Token = require('../models/Token');
 
 //======================================================================
 // Include settings file
 //======================================================================
 
 var settings = require('../config/settings.json');
-
-//======================================================================
-// Authentication handling using middleware
-//======================================================================
-
-// web token check
-api.use(function (req, res, next) {
-
-	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
-	if (token) {
-		jwt.verify(token, settings.Secret, function (err, value) {
-			if (err) {
-				return res.json({
-					sucess: false,
-					message: "Failed to authenticate token."
-				});
-			} else {
-				req.value = value;
-				next();
-			}
-		});
-	} else {
-		// return an error if no token is found
-		return res.status(403).send({
-			success: false,
-			message: "No token provided."
-		});
-	}
-
-});
-
-//======================================================================
-// api home route
-//======================================================================
-
-api.get('/', function (req, res, next) {
-	res.send({
-		message: "Welcome to pixrte api endpoint !"
-	});
-});
 
 //======================================================================
 // api users setup
@@ -71,22 +31,62 @@ api.get('/setup', function (req, res, next) {
 	}, function (err, user) {
 		if (err) throw err;
 		if (user) {
-			res.json({
-				sucess: false,
-				message: "User already exists"
-			});
+			res.json(seeds.UserExists);
 		} else {
 
 			//save the sample user
 			newUser.save(function (err) {
 				if (err) throw err;
-				console.log('user saved succesfully');;
-				res.json({
-					sucess: true,
-					message: "User created sucesfully"
-				});
+				res.json(seeds.UserCreated);
 			});
 		}
+	});
+});
+
+//======================================================================
+// Authentication handling using middleware
+//======================================================================
+
+// web token check
+api.use(function (req, res, next) {
+
+	// check header or url parameters or post parameters for token
+	var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+	if (token) {
+		jwt.verify(token, settings.Secret, function (err, decoded) {
+			if (err) {
+				return res.status(403).json(seeds.TokenAuthFailed);
+			} else {
+
+				req.token = token;
+				req.username = decoded.username;
+				req.isAdmin = decoded.isAdmin;
+
+				// Token.findOne({token : token}, function (err, found) {
+				// 	if (err) throw err;
+				// 	if (found) {
+				// 		req.username = found.username;
+				// 	}
+				// });	
+				
+				next();
+			}
+		});
+	} else {
+		// return an error if no token is found
+		return res.status(403).send(seeds.TokenNotFound);
+	}
+
+});
+
+//======================================================================
+// api home route
+//======================================================================
+
+api.get('/', function (req, res, next) {
+	res.send({
+		message: "Welcome to pixrte api endpoint !"
 	});
 });
 
