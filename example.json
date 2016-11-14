@@ -1,0 +1,21 @@
+{
+	"username": "askldflksd",
+	"email": "aklsdfjksd.asdjkfhsd@gmail.com",
+	"password": "dsaflHJdf789797",
+	"addresses": [{
+		"houseno": "1-5-479 ",
+		"addr_line1": "sdafjkhklsdflsdjf sd fasdf",
+		"addr_line2": "sdfkljskldfjljsf sfjlksjljsdfl",
+		"pincode": "500010"
+	}, {
+		"houseno": "1-5-479 ",
+		"addr_line1": "sdafjkhklsdflsdjf sd fasdf",
+		"addr_line2": "sdfkljskldfjljsf sfjlksjljsdfl",
+		"pincode": "500010"
+	}, {
+		"houseno": "1-5-479 ",
+		"addr_line1": "sdafjkhklsdflsdjf sd fasdf",
+		"addr_line2": "sdfkljskldfjljsf sfjlksjljsdfl",
+		"pincode": "500010"
+	}]
+}
