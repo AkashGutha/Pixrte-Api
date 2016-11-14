@@ -15,7 +15,7 @@ var settings = require('../config/settings.json');
 // Signin handling
 //======================================================================
 
-auth.get('/signin', function (req, res, next) {
+auth.post('/signin', function (req, res, next) {
 
 	//create a sample user.
 	var newUser = new User({
@@ -68,7 +68,7 @@ auth.get('/signin', function (req, res, next) {
 // Signup handling
 //======================================================================
 
-auth.get('/signup', function (req, res, next) {
+auth.post('/signup', function (req, res, next) {
 
 	//create a sample user.
 	var newUser = new User({
