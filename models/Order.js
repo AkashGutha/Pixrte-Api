@@ -6,16 +6,42 @@ var Schema = mongoose.Schema;
 //======================================================================
 
 var orderSchema = new Schema({
-    name: {
-        type: String,
-        required: true,
-        index: true,
-        unique: true
-    },
-    price: {
-        type: Number,
-        required: true
-    }
+	order_no: {
+		type: Number,
+		require: true,
+		index: true,
+		unique: true
+	}
+	template: {
+		type: Schema.Types.Mixed,
+		required: true
+	},
+	path_to_storage: {
+		type: String,
+		required: true
+	},
+	items_no: {
+		type: Number,
+		required: true
+	},
+	price: {
+		type: Number,
+		required: true
+	},
+	in_progress: {
+		type: Boolean,
+		required: false
+	},
+	in_progress: {
+		type: Boolean,
+		required: false
+	},
+	user_accepted: {
+		type: Boolean,
+		required: false
+	}
+}, {
+	strict: false
 });
 
 module.exports = mongoose.model('Order', orderSchema);

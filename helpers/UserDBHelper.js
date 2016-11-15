@@ -1,23 +1,17 @@
 var User = require('../models/User');
 var seeds = require('../helpers/seedMessages');
 
-function findOne(query, callback) {
-	User.findOne(query, function (err, user) {
-		if (err) throw err;
-		callback(null, user);
-	});
-}
-
 function findOneByUsername(name, callback) {
-
-	User.findOne({
+	var query = {
 		username: name
-	}, function (err, user) {
+	};
+	User.findOne(query, function (err, user) {
 		if (typeof callback === 'function') {
 			if (err) throw err;
 			callback(null, user);
 		}
 	});
+
 }
 
 function save(newUser, res) {
@@ -32,6 +26,16 @@ function save(newUser, res) {
 				res.json(seeds.UserCreated);
 			});
 		}
+	});
+}
+
+
+function delete(name, res) {
+	var query = {
+		username: name
+	};
+	User.remove(query, function () {
+
 	});
 }
 

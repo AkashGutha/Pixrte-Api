@@ -4,17 +4,17 @@
 
 exports.UserExists = {
 	success: false,
-	message: 'Sorry! User exists'
+	message: 'User exists'
 };
 
 exports.UserNotFound = {
 	success: false,
-	message: 'Authentication failed, User not found'
+	message: 'User not found'
 };
 
 exports.UserExists = {
 	success: false,
-	message: 'Sorry! The username is taken'
+	message: 'Username is taken'
 };
 
 exports.UserCreated = {
@@ -28,12 +28,12 @@ exports.MissingCredentials = {
 };
 
 //======================================================================
-// PAssword related messages
+// Password related messages
 //======================================================================
 
 exports.PasswordMatchFailure = {
 	success: false,
-	message: 'Authentication failed. Wrong password'
+	message: 'Wrong password'
 };
 
 
