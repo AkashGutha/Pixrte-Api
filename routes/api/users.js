@@ -15,7 +15,7 @@ var settings = require('../../config/settings.json');
 
 users.get('/:username', function (req, res, next) {
 	if (req.username === req.params.username || req.isAdmin === true) {
-
+		console.log('faskjdfjk.sdfjk.sdjksdf');
 	}
 
 })

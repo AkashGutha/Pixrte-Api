@@ -6,16 +6,16 @@ var Schema = mongoose.Schema;
 //======================================================================
 
 var orderSchema = new Schema({
-	name: {
-		type: String,
-		required: true,
-		index: true,
-		unique: true
-	},
-	price: {
-		type: Number,
-		required: true
-	}
+    name: {
+        type: String,
+        required: true,
+        index: true,
+        unique: true
+    },
+    price: {
+        type: Number,
+        required: true
+    }
 });
 
-module.exports = mongoose.model('Order', schema);
+module.exports = mongoose.model('Order', orderSchema);
