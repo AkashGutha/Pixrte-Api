@@ -1,6 +1,8 @@
 var express = require('express');
 var users = express.Router();
 
+var User = require('../../models/User');
+
 //======================================================================
 // Include settings file
 //======================================================================
@@ -11,21 +13,24 @@ var settings = require('../../config/settings.json');
 // Users CRUD operations
 //======================================================================
 
-users.get('/users/:username', function (req, res, next) {
-	res.json(settings);
-})
+users.get('/:username', function (req, res, next) {
+	if (req.username === req.params.username || req.isAdmin === true) {
 
-.post('/setup', function (req, res, next) {
-
-})
-
-.delete('/setup', function (req, res, next) {
+	}
 
 })
 
-.put('/setup', function (req, res, next) {
+.post('/:username', function (req, res, next) {
 
 })
+
+.delete('/:username', function (req, res, next) {
+
+})
+
+.put('/:username', function (req, res, next) {
+
+});
 
 //======================================================================
 // Export the route

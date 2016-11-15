@@ -70,7 +70,7 @@ auth.post('/signin', function (req, res, next) {
 				});
 
 				// return the information including token as JSON
-				res.json(seeds.TokenCreated(token));
+				res.json(seeds.TokenCreated(token.value));
 			}
 		}
 	});

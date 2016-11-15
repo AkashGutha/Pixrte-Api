@@ -1,6 +1,6 @@
 {
 	"Name": "Pixrte",
 	"ConnectionUrl": "mongodb://localhost:27017/pixrte",
-	"Secret": "this is an awesome super secret that will blow your mind",
+	"Secret": "thesceret",
 	"expirationTime": 3600
 }

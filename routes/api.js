@@ -2,6 +2,8 @@ var express = require('express');
 var api = express.Router();
 var jwt = require('jsonwebtoken');
 
+var UserDB = require('../helpers/UserDBHelper');
+
 var seeds = require('../helpers/seedMessages');
 var User = require('../models/User');
 var Token = require('../models/Token');
@@ -28,31 +30,17 @@ api.use('/users', userRoute);
 // api users setup
 //======================================================================
 
-api.get('/setup', function (req, res, next) {
+api.post('/setup', function (req, res, next) {
 
 	//create a sample user.
 	var newUser = new User({
-		username: "akash",
+		username: "akash1",
 		email: "akash.gutha@outlook.com",
 		password: "password",
 		isAdmin: true
 	});
 
-	User.findOne({
-		username: newUser.username
-	}, function (err, user) {
-		if (err) throw err;
-		if (user) {
-			res.json(seeds.UserExists);
-		} else {
-
-			//save the sample user
-			newUser.save(function (err) {
-				if (err) throw err;
-				res.json(seeds.UserCreated);
-			});
-		}
-	});
+	UserDB.save(newUser, res);
 });
 
 //======================================================================
