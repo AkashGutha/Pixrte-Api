@@ -11,7 +11,7 @@ var orderSchema = new Schema({
 		require: true,
 		index: true,
 		unique: true
-	}
+	},
 	template: {
 		type: Schema.Types.Mixed,
 		required: true

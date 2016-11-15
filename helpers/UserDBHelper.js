@@ -1,26 +1,27 @@
 var User = require('../models/User');
 var seeds = require('../helpers/seedMessages');
 
-function findOneByUsername(name, callback) {
-	var query = {
-		username: name
-	};
-	User.findOne(query, function (err, user) {
-		if (typeof callback === 'function') {
+function find(name, callback) {
+	User.findOne({
+			username: name
+		},
+		function (err, user) {
 			if (err) throw err;
-			callback(null, user);
-		}
-	});
-
+			//send callback after getting the user
+			if (typeof callback === 'function') {
+				callback(null, user);
+			}
+		});
 }
 
 function save(newUser, res) {
-	this.findOneByUsername(newUser.username, function (err, user) {
+	this.find(newUser.username, function (err, user) {
+
 		if (err) throw err;
 		if (user) {
 			res.json(seeds.UserExists);
 		} else {
-			//save the sample user
+			//save 	User.finBthe sample user and send response
 			newUser.save(function (err) {
 				if (err) throw err;
 				res.json(seeds.UserCreated);
@@ -29,16 +30,11 @@ function save(newUser, res) {
 	});
 }
 
-
-function delete(name, res) {
-	var query = {
-		username: name
-	};
-	User.remove(query, function () {
-
-	});
+function remove(user, callback) {
+	User.findByIdAndRemove(user._id, callback);
 }
 
+
 exports.save = save;
-exports.findOne = findOne;
-exports.findOneByUsername = findOneByUsername;
+exports.find = find;
+exports.remove = remove;

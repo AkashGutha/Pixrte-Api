@@ -49,7 +49,6 @@ api.post('/setup', function (req, res, next) {
 // web token check
 api.use(function (req, res, next) {
 
-	console.log(typeof req.originalUrl);
 	if (req.originalUrl.includes('/api/account')) {
 		next();
 	} else {
@@ -63,11 +62,15 @@ api.use(function (req, res, next) {
 					return res.status(403).json(seeds.TokenAuthFailed);
 				} else {
 
-					req.token = token;
-					req.username = decoded.username;
-					req.isAdmin = decoded.isAdmin;
+					UserDB.find(decoded.username, function (err, user) {
+						req.token = token;
+						req.user = user;
+						console.log(user);
+						next();
+					});
 
-					next();
+					// req.token = token;
+					// next();
 				}
 			});
 		} else {

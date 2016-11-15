@@ -16,7 +16,7 @@ var settings = require('../../config/settings.json');
 //======================================================================
 
 users.get('/:username', function (req, res, next) {
-	if (req.username === req.params.username || req.isAdmin === true)
+	if (req.user.username === req.params.username || req.isAdmin === true)
 		UserDB.findOneByUsername(req.params.username, function (err, user) {
 			return res.status(200).json(user);
 		});
@@ -24,30 +24,22 @@ users.get('/:username', function (req, res, next) {
 })
 
 .post('/:username', function (req, res, next) {
-	if (req.username === req.params.username || req.isAdmin === true)
-		UserDB.findOneByUsername(req.params.username, function (err, user) {
-			return res.status(200).json(user);
-		});
-	else
-		res.status(500).end();
+
+	res.status(500).end();
 })
 
 .delete('/:username', function (req, res, next) {
-	if (req.username === req.params.username || req.isAdmin === true)
-		UserDB.findOneByUsername(req.params.username, function (err, user) {
+
+	if (req.user.username === req.params.username || req.isAdmin === true)
+		UserDB.remove(req.user, function (err, user) {
 			return res.status(200).json(user);
 		});
-	else
-		res.status(500).end();
+	else res.status(500).end();
 })
 
 .put('/:username', function (req, res, next) {
-	if (req.username === req.params.username || req.isAdmin === true)
-		UserDB.findOneByUsername(req.params.username, function (err, user) {
-			return res.status(200).json(user);
-		});
-	else
-		res.status(500).end();
+
+	res.status(500).end();
 });
 
 //======================================================================
