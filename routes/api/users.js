@@ -17,7 +17,8 @@ users.get('/:username', function (req, res, next) {
 	if (req.username === req.params.username || req.isAdmin === true) {
 		console.log('faskjdfjk.sdfjk.sdjksdf');
 	}
-
+	console.log(req.username + ":" + req.params.username);
+	res.end();
 })
 
 .post('/:username', function (req, res, next) {

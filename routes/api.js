@@ -18,13 +18,6 @@ var templateRoute = require('./api/templates');
 
 var settings = require('../config/settings.json');
 
-//======================================================================
-// Register API routes
-//======================================================================
-
-api.use('/users', userRoute);
-//api.use('/orders', orderRoute);
-//api.use('/templates', templateRoute);
 
 //======================================================================
 // api users setup
@@ -72,6 +65,15 @@ api.use(function (req, res, next) {
 	}
 
 });
+
+
+//======================================================================
+// Register API routes
+//======================================================================
+
+api.use('/users', userRoute);
+//api.use('/orders', orderRoute);
+//api.use('/templates', templateRoute);
 
 //======================================================================
 // API home route
