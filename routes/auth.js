@@ -18,7 +18,7 @@ var settings = require('../config/settings.json');
 
 auth.post('/signin', function (req, res, next) {
 
-	if (! (req.query.username !== undefined && req.query.password !== undefined) ) {
+	if (!(req.query.username !== undefined && req.query.password !== undefined)) {
 		res.json(seeds.MissingCredentials);
 		return;
 	}
@@ -28,6 +28,7 @@ auth.post('/signin', function (req, res, next) {
 		username: req.query.username,
 		password: req.query.password
 	});
+
 
 	User.findOne({
 		username: newUser.username
@@ -41,27 +42,30 @@ auth.post('/signin', function (req, res, next) {
 		} else if (user) {
 
 			// check if password matches
-			if (!User.validate(newUser.password,user.password)) {
+			if (!User.validate(newUser.password, user.password)) {
 				res.json(seeds.PasswordMatchFailure);
 			} else {
 
-				var query = { username: user.username , isAdmin : user.isAdmin };
+				var query = {
+					username: user.username,
+					isAdmin: user.isAdmin
+				};
 
 				// if user is found and password is right
 				// create a token
 				var token = new Token({
-					value: jwt.sign( query , settings.Secret, {
+					value: jwt.sign(query, settings.Secret, {
 						expiresIn: settings.expirationTime // expires in 1 hour
-					}),username : user.username
+					}),
+					username: user.username
 				});
 
 				//save the  token
-
-				Token.findOne( query ,function (err,prevToken) {
+				Token.findOne(query, function (err, prevToken) {
 					if (err) throw err;
-                    if (prevToken) {
-                        prevToken.remove(query);
-                    }
+					if (prevToken) {
+						prevToken.remove(query);
+					}
 					token.save();
 				});
 
@@ -79,7 +83,7 @@ auth.post('/signin', function (req, res, next) {
 
 auth.post('/signup', function (req, res, next) {
 
-	if (! (req.query.username !== undefined && req.query.password !== undefined && req.query.email !== undefined) ) {
+	if (!(req.query.username !== undefined && req.query.password !== undefined && req.query.email !== undefined)) {
 		res.json(seeds.MissingCredentials);
 		return;
 	}
@@ -91,11 +95,11 @@ auth.post('/signup', function (req, res, next) {
 		email: req.query.email,
 		isAdmin: false
 	});
-	
-	
+
+
 	User.findOne({
 		username: newUser.username
-		}, function (err, user) {
+	}, function (err, user) {
 
 		if (err) throw err;
 
@@ -119,10 +123,12 @@ auth.post('/signup', function (req, res, next) {
 //======================================================================
 
 auth.post('/signout', function (req, res, next) {
-	
+
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-    if(value)Token.remove({ value: token });
+	if (value) Token.remove({
+		value: token
+	});
 
 });
 

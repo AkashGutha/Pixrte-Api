@@ -6,11 +6,23 @@ var seeds = require('../helpers/seedMessages');
 var User = require('../models/User');
 var Token = require('../models/Token');
 
+var userRoute = require('./api/users');
+var orderRoute = require('./api/orders');
+var templateRoute = require('./api/templates');
+
 //======================================================================
 // Include settings file
 //======================================================================
 
 var settings = require('../config/settings.json');
+
+//======================================================================
+// Register API routes
+//======================================================================
+
+api.use('/users', userRoute);
+//api.use('/orders', orderRoute);
+//api.use('/templates', templateRoute);
 
 //======================================================================
 // api users setup
@@ -63,13 +75,6 @@ api.use(function (req, res, next) {
 				req.username = decoded.username;
 				req.isAdmin = decoded.isAdmin;
 
-				// Token.findOne({token : token}, function (err, found) {
-				// 	if (err) throw err;
-				// 	if (found) {
-				// 		req.username = found.username;
-				// 	}
-				// });	
-				
 				next();
 			}
 		});
@@ -81,7 +86,7 @@ api.use(function (req, res, next) {
 });
 
 //======================================================================
-// api home route
+// API home route
 //======================================================================
 
 api.get('/', function (req, res, next) {
@@ -93,6 +98,5 @@ api.get('/', function (req, res, next) {
 //======================================================================
 // Export the route
 //======================================================================
-
 
 module.exports = api;

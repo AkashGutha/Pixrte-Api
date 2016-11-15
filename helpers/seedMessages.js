@@ -1,31 +1,30 @@
-
 //======================================================================
 // User account related messages
 //======================================================================
 
 exports.UserExists = {
-    success: false,
-    message: 'Sorry! User exists'
+	success: false,
+	message: 'Sorry! User exists'
 };
 
 exports.UserNotFound = {
-    success: false,
-    message: 'Authentication failed, User not found'
+	success: false,
+	message: 'Authentication failed, User not found'
 };
 
 exports.UserExists = {
-    success: false,
-    message: 'Sorry! The username is taken'
+	success: false,
+	message: 'Sorry! The username is taken'
 };
 
 exports.UserCreated = {
-    success: true,
-    message: 'User created sucesfully'
+	success: true,
+	message: 'User created sucesfully'
 };
 
 exports.MissingCredentials = {
-    success: false,
-    message: 'Missing credentials'
+	success: false,
+	message: 'Missing credentials'
 };
 
 //======================================================================
@@ -33,8 +32,8 @@ exports.MissingCredentials = {
 //======================================================================
 
 exports.PasswordMatchFailure = {
-    success: false,
-    message: 'Authentication failed. Wrong password'
+	success: false,
+	message: 'Authentication failed. Wrong password'
 };
 
 
@@ -43,24 +42,19 @@ exports.PasswordMatchFailure = {
 //======================================================================
 
 exports.TokenCreated = function (token) {
-    return {
-        success: true,
-        message: 'Token generated sucessfully',
-        token: token
-    }
+	return {
+		success: true,
+		message: 'Token generated sucessfully',
+		token: token
+	}
 };
 
 exports.TokenAuthFailed = {
-    success: false,
-    message: 'Token authentication failed'
+	success: false,
+	message: 'Token authentication failed'
 };
 
 exports.TokenNotFound = {
-    success: false,
-    message: "Token not found"
+	success: false,
+	message: "Token not found"
 };
-
-
-
-
-
