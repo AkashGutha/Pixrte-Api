@@ -16,7 +16,7 @@ var settings = require('../config/settings.json');
 // Signin handling
 //======================================================================
 
-auth.post('/signin', function (req, res, next) {
+auth.get('/signin', function (req, res, next) {
 
 	if (!(req.query.username !== undefined && req.query.password !== undefined)) {
 		res.json(seeds.MissingCredentials);
@@ -81,7 +81,7 @@ auth.post('/signin', function (req, res, next) {
 // Signup handling
 //======================================================================
 
-auth.post('/signup', function (req, res, next) {
+auth.get('/signup', function (req, res, next) {
 
 	if (!(req.query.username !== undefined && req.query.password !== undefined && req.query.email !== undefined)) {
 		res.json(seeds.MissingCredentials);
@@ -122,7 +122,7 @@ auth.post('/signup', function (req, res, next) {
 // Signout handling
 //======================================================================
 
-auth.post('/signout', function (req, res, next) {
+auth.get('/signout', function (req, res, next) {
 
 	// check header or url parameters or post parameters for token
 	var token = req.body.token || req.query.token || req.headers['x-access-token'];
