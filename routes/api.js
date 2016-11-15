@@ -10,6 +10,7 @@ var Token = require('../models/Token');
 
 var userRoute = require('./api/users');
 var orderRoute = require('./api/orders');
+var accountRoute = require('./api/account');
 var templateRoute = require('./api/templates');
 
 //======================================================================
@@ -18,6 +19,11 @@ var templateRoute = require('./api/templates');
 
 var settings = require('../config/settings.json');
 
+//======================================================================
+// Register Un Authenticated API routes
+//======================================================================
+
+api.use('/account', accountRoute);
 
 //======================================================================
 // api users setup
@@ -43,37 +49,43 @@ api.post('/setup', function (req, res, next) {
 // web token check
 api.use(function (req, res, next) {
 
-	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-
-	if (token) {
-		jwt.verify(token, settings.Secret, function (err, decoded) {
-			if (err) {
-				return res.status(403).json(seeds.TokenAuthFailed);
-			} else {
-
-				req.token = token;
-				req.username = decoded.username;
-				req.isAdmin = decoded.isAdmin;
-
-				next();
-			}
-		});
+	console.log(typeof req.originalUrl);
+	if (req.originalUrl.includes('/api/account')) {
+		next();
 	} else {
-		// return an error if no token is found
-		return res.status(403).send(seeds.TokenNotFound);
+
+		// check header or url parameters or post parameters for token
+		var token = req.body.token || req.query.token || req.headers['x-access-token'];
+
+		if (token) {
+			jwt.verify(token, settings.Secret, function (err, decoded) {
+				if (err) {
+					return res.status(403).json(seeds.TokenAuthFailed);
+				} else {
+
+					req.token = token;
+					req.username = decoded.username;
+					req.isAdmin = decoded.isAdmin;
+
+					next();
+				}
+			});
+		} else {
+			// return an error if no token is found
+			return res.status(403).send(seeds.TokenNotFound);
+		}
 	}
 
 });
 
 
 //======================================================================
-// Register API routes
+// Register authenticated API routes
 //======================================================================
 
 api.use('/users', userRoute);
-//api.use('/orders', orderRoute);
-//api.use('/templates', templateRoute);
+api.use('/orders', orderRoute);
+api.use('/templates', templateRoute);
 
 //======================================================================
 // API home route

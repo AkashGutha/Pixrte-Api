@@ -13,7 +13,6 @@ var jwt = require('jsonwebtoken');
 
 var index = require('./routes/index');
 var apiRoute = require('./routes/api');
-var authRoute = require('./routes/auth');
 
 var app = express();
 
@@ -52,7 +51,6 @@ app.use(express.static(path.join(__dirname, 'public')));
 // Routes injection
 //======================================================================
 
-app.use('/auth', authRoute);
 app.use('/api', apiRoute);
 app.use('/', index);
 
