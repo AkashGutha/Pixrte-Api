@@ -32,6 +32,10 @@ var orderSchema = new Schema({
 		type: Boolean,
 		required: false
 	},
+	is_cancelled: {
+		type: Boolean,
+		required: true
+	},
 	user_accepted: {
 		type: Boolean,
 		required: true
