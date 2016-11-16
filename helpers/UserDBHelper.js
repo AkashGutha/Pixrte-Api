@@ -6,7 +6,7 @@ function find(name, callback) {
 			username: name
 		},
 		function (err, user) {
-			if (err) throw err;
+			if (err) callback(err, null);
 			//send callback after getting the user
 			if (typeof callback === 'function') {
 				callback(null, user);
