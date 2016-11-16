@@ -23,7 +23,22 @@ var userSchema = new Schema({
 	isAdmin: {
 		type: Boolean,
 		required: true
+	},
+	orders: [
+		id: {
+			type: Number,
+			required: true
+		}
+	],
+	phone: Number,
+	address: {
+		line1: String,
+		line2: String,
+		city: String,
+		state: String,
+		zipcode: Number
 	}
+}
 });
 
 //======================================================================
@@ -31,12 +46,12 @@ var userSchema = new Schema({
 //======================================================================
 
 
-userSchema.statics.encrypt = function(password) {
-    return bcrypt.hashSync(password);
+userSchema.statics.encrypt = function (password) {
+	return bcrypt.hashSync(password);
 };
 
-userSchema.statics.validate = function(password,hash) {
-    return bcrypt.compareSync(password,hash);
+userSchema.statics.validate = function (password, hash) {
+	return bcrypt.compareSync(password, hash);
 };
 
 //======================================================================
