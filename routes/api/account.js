@@ -20,15 +20,15 @@ var settings = require('../../config/settings.json');
 
 account.post('/signin', function (req, res, next) {
 
-	if (!(req.query.username !== undefined && req.query.password !== undefined)) {
+	if (!(req.body.username !== undefined && req.body.password !== undefined)) {
 		res.json(seeds.MissingCredentials);
 		return;
 	}
 
 	//create a sample user.
 	var newUser = new User({
-		username: req.query.username,
-		password: req.query.password
+		username: req.body.username,
+		password: req.body.password
 	});
 
 
@@ -48,7 +48,7 @@ account.post('/signin', function (req, res, next) {
 				res.json(seeds.PasswordMatchFailure);
 			} else {
 
-				var query = {
+				var body = {
 					username: user.username,
 					isAdmin: user.isAdmin
 				};
@@ -56,17 +56,17 @@ account.post('/signin', function (req, res, next) {
 				// if user is found and password is right
 				// create a token
 				var token = new Token({
-					value: jwt.sign(query, settings.Secret, {
+					value: jwt.sign(body, settings.Secret, {
 						expiresIn: settings.expirationTime // expires in 1 hour
 					}),
 					username: user.username
 				});
 
 				//save the  token
-				Token.findOne(query, function (err, prevToken) {
+				Token.findOne(body, function (err, prevToken) {
 					if (err) throw err;
 					if (prevToken) {
-						prevToken.remove(query);
+						prevToken.remove(body);
 					}
 					token.save();
 				});
@@ -85,16 +85,16 @@ account.post('/signin', function (req, res, next) {
 
 account.post('/signup', function (req, res, next) {
 
-	if (!(req.query.username !== undefined && req.query.password !== undefined && req.query.email !== undefined)) {
+	if (!(req.body.username !== undefined && req.body.password !== undefined && req.body.email !== undefined)) {
 		res.json(seeds.MissingCredentials);
 		return;
 	}
 
 	//create a sample user.
 	var newUser = new User({
-		username: req.query.username,
-		password: User.encrypt(req.query.password),
-		email: req.query.email,
+		username: req.body.username,
+		password: User.encrypt(req.body.password),
+		email: req.body.email,
 		isAdmin: false
 	});
 
@@ -109,11 +109,14 @@ account.post('/signup', function (req, res, next) {
 account.post('/signout', function (req, res, next) {
 
 	// check header or url parameters or post parameters for token
-	var token = req.body.token || req.query.token || req.headers['x-access-token'];
-	if (value) Token.remove({
+	var token = req.headers['x-access-token'];
+	if (token) Token.remove({
 		value: token
+	}, function (err) {
+		if (err) res.status(500).end();
+		else res.status(200);
 	});
-
+	res.status(500).end();
 });
 
 module.exports = account;
