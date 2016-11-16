@@ -43,6 +43,10 @@ var orderSchema = new Schema({
 	user_accepted: {
 		type: Boolean,
 		required: true
+	},
+	created_at: {
+		type: Date,
+		required: true
 	}
 }, {
 	strict: false

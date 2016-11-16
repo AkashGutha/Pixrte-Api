@@ -63,10 +63,13 @@ api.use(function (req, res, next) {
 				} else {
 
 					UserDB.find(decoded.username, function (err, user) {
-						req.token = token;
-						req.user = user;
-						console.log(user);
-						next();
+						if (err) {
+							return res.status(403).json(seeds.TokenAuthFailed);
+						} else {
+							req.token = token;
+							req.user = user;
+							next();
+						}
 					});
 
 					// req.token = token;
