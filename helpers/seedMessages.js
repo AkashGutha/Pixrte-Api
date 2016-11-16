@@ -58,3 +58,13 @@ exports.TokenNotFound = {
 	success: false,
 	message: "Token not found"
 };
+
+
+//======================================================================
+// Privilegaes related messages
+//======================================================================
+
+exports.NotAuthorized = {
+	success: false,
+	message: 'Not Authorized'
+};
