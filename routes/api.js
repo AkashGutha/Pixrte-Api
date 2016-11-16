@@ -35,7 +35,7 @@ api.post('/setup', function (req, res, next) {
 	var newUser = new User({
 		username: "akash1",
 		email: "akash.gutha@outlook.com",
-		password: "password",
+		password: User.encrypt("password"),
 		isAdmin: true
 	});
 
