@@ -24,12 +24,9 @@ var userSchema = new Schema({
 		type: Boolean,
 		required: true
 	},
-	orders: [
-		id: {
-			type: Number,
-			required: true
-		}
-	],
+	orders: {
+		type: [Number]
+	},
 	phone: Number,
 	address: {
 		line1: String,
@@ -38,7 +35,6 @@ var userSchema = new Schema({
 		state: String,
 		zipcode: Number
 	}
-}
 });
 
 //======================================================================
