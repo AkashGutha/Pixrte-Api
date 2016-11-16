@@ -16,6 +16,10 @@ var orderSchema = new Schema({
 		type: Schema.Types.Mixed,
 		required: true
 	},
+	username: {
+		type: String,
+		required: true
+	},
 	path_to_storage: {
 		type: String,
 		required: true
