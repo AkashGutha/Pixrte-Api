@@ -15,7 +15,9 @@ var templateSchema = new Schema({
 	price: {
 		type: Number,
 		required: true
-	}
+	},
+	details: Schema.Types.Mixed
+
 });
 
 module.exports = mongoose.model('Template', templateSchema);
