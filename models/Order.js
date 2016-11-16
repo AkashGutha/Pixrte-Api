@@ -20,7 +20,7 @@ var orderSchema = new Schema({
 		type: String,
 		required: true
 	},
-	items_no: {
+	no_of_items: {
 		type: Number,
 		required: true
 	},
@@ -32,13 +32,9 @@ var orderSchema = new Schema({
 		type: Boolean,
 		required: false
 	},
-	in_progress: {
-		type: Boolean,
-		required: false
-	},
 	user_accepted: {
 		type: Boolean,
-		required: false
+		required: true
 	}
 }, {
 	strict: false
