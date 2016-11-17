@@ -19,6 +19,21 @@ function find(name, callback) {
 }
 
 //======================================================================
+// Find all users
+//======================================================================
+
+function findAll(callback) {
+	User.find({},
+		function (err, user) {
+			if (err) callback(err, null);
+			//send callback after getting the user
+			if (typeof callback === 'function') {
+				callback(null, user);
+			}
+		});
+}
+
+//======================================================================
 // Save a user
 //======================================================================
 
@@ -62,3 +77,4 @@ function remove(user, callback) {
 exports.save = save;
 exports.find = find;
 exports.remove = remove;
+exports.findAll = findAll;

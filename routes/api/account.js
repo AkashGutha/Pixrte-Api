@@ -1,5 +1,5 @@
 var express = require('express');
-var account = express.Router();
+var Account = express.Router();
 var jwt = require('jsonwebtoken');
 
 var UserDB = require('../../helpers/UserDBHelper');
@@ -18,7 +18,7 @@ var settings = require('../../config/settings.json');
 // Signin handling
 //======================================================================
 
-account.post('/signin', function (req, res, next) {
+Account.post('/signin', function (req, res, next) {
 
 	if (!(req.body.username !== undefined && req.body.password !== undefined)) {
 		res.json(seeds.MissingCredentials);
@@ -83,7 +83,7 @@ account.post('/signin', function (req, res, next) {
 // Signup handling
 //======================================================================
 
-account.post('/signup', function (req, res, next) {
+Account.post('/signup', function (req, res, next) {
 
 	if (!(req.body.username !== undefined && req.body.password !== undefined && req.body.email !== undefined)) {
 		res.json(seeds.MissingCredentials);
@@ -106,7 +106,7 @@ account.post('/signup', function (req, res, next) {
 // Signout handling
 //======================================================================
 
-account.post('/signout', function (req, res, next) {
+Account.post('/signout', function (req, res, next) {
 
 	// check header or url parameters or post parameters for token
 	var token = req.headers['x-access-token'];
@@ -123,4 +123,4 @@ account.post('/signout', function (req, res, next) {
 // Export the route
 //======================================================================
 
-module.exports = account;
+module.exports = Account;

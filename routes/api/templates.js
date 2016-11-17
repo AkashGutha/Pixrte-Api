@@ -1,5 +1,5 @@
 var express = require('express');
-var templates = express.Router();
+var Templates = express.Router();
 
 var seeds = require('../../helpers/seedMessages');
 var Template = require('../../models/Template');
@@ -9,7 +9,7 @@ var TemplateDB = require('../../helpers/TemplateDBHelper');
 // GET requests
 //======================================================================
 
-templates.get('/all', function (req, res, next) {
+Templates.get('/all', function (req, res, next) {
 	TemplateDB.getAll(function (err, templates) {
 		if (err) res.status(500).end();
 		else res.status(200).json(templates);
@@ -21,7 +21,7 @@ templates.get('/all', function (req, res, next) {
 // POST requests
 //======================================================================
 
-templates.post('/:name', function (req, res, next) {
+Templates.post('/:name', function (req, res, next) {
 	if (req.user.isAdmin === true) {
 		TemplateDB.save(function (err, templates) {
 			if (err) res.status(500).end();
@@ -37,7 +37,7 @@ templates.post('/:name', function (req, res, next) {
 // PUT requests
 //======================================================================
 
-templates.put('/:name', function (req, res, next) {
+Templates.put('/:name', function (req, res, next) {
 	if (req.user.isAdmin === true) {
 		TemplateDB.save(function (err, templates) {
 			if (err) res.status(500).end();
@@ -51,7 +51,7 @@ templates.put('/:name', function (req, res, next) {
 // DELETE requests
 //======================================================================
 
-templates.delete('/:name', function (req, res, next) {
+Templates.delete('/:name', function (req, res, next) {
 	if (req.user.isAdmin === true) {
 		TemplateDB.save(function (err, templates) {
 			if (err) res.status(500).end();
@@ -67,4 +67,4 @@ templates.delete('/:name', function (req, res, next) {
 // Export the route
 //======================================================================
 
-module.exports = templates;
+module.exports = Templates;

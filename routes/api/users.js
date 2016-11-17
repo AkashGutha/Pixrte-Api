@@ -1,5 +1,5 @@
 var express = require('express');
-var users = express.Router();
+var Users = express.Router();
 
 var UserDB = require('../../helpers/UserDBHelper');
 var User = require('../../models/User');
@@ -15,7 +15,31 @@ var settings = require('../../config/settings.json');
 // GET requests for Users
 //======================================================================
 
-users.get('/:username', function (req, res, next) {
+Users.get('/all', function (req, res, next) {
+	console.log('all called');
+	if (req.user.isAdmin === true) {
+
+		UserDB.findAll(function (err, users) {
+			if (err)
+				res.status(500).end();
+			else res.status(200).json(users);
+		});
+	} else res.status(403).json(seeds.NotAuthorized);
+
+});
+
+Users.get('/me', function (req, res, next) {
+	console.log('my called');
+	UserDB.find(req.user.username, function (err, user) {
+		if (err)
+			res.status(500).end();
+		if (user)
+			res.status(200).json(user);
+		else res.status(403).json(seeds.UserNotFound);
+	});
+});
+
+Users.get('/:username', function (req, res, next) {
 	if (req.user.username === req.params.username || req.user.isAdmin === true) {
 
 		UserDB.find(req.params.username, function (err, user) {
@@ -32,12 +56,14 @@ users.get('/:username', function (req, res, next) {
 	}
 });
 
+
+
 //======================================================================
 // PUT requests for Users
 //======================================================================
 
 
-users.put('/:username', function (req, res, next) {
+Users.put('/:username', function (req, res, next) {
 
 	res.status(500).end();
 });
@@ -47,7 +73,7 @@ users.put('/:username', function (req, res, next) {
 //======================================================================
 
 
-users.delete('/:username', function (req, res, next) {
+Users.delete('/:username', function (req, res, next) {
 
 	if (req.user.username === req.params.username || req.isAdmin === true)
 		UserDB.remove(req.user, function (err, user) {
@@ -60,4 +86,4 @@ users.delete('/:username', function (req, res, next) {
 // Export the route
 //======================================================================
 
-module.exports = users;
+module.exports = Users;
