@@ -78,3 +78,8 @@ exports.ResourceExists = {
 	success: false,
 	message: 'Rescource already exists'
 };
+
+exports.ResourceCreadted = {
+	success: false,
+	message: 'Rescource created exists'
+};

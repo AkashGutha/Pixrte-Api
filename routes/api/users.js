@@ -12,7 +12,7 @@ var seeds = require('../../helpers/seedMessages');
 var settings = require('../../config/settings.json');
 
 //======================================================================
-// Users CRUD operations
+// GET requests for Users
 //======================================================================
 
 users.get('/:username', function (req, res, next) {
@@ -30,25 +30,30 @@ users.get('/:username', function (req, res, next) {
 	} else {
 		res.status(500).end();
 	}
-})
+});
 
-.post('/:username', function (req, res, next) {
+//======================================================================
+// PUT requests for Users
+//======================================================================
+
+
+users.put('/:username', function (req, res, next) {
 
 	res.status(500).end();
-})
+});
 
-.delete('/:username', function (req, res, next) {
+//======================================================================
+// DELETE requests for Users
+//======================================================================
+
+
+users.delete('/:username', function (req, res, next) {
 
 	if (req.user.username === req.params.username || req.isAdmin === true)
 		UserDB.remove(req.user, function (err, user) {
 			return res.status(200).json(user);
 		});
 	else res.status(500).end();
-})
-
-.put('/:username', function (req, res, next) {
-
-	res.status(500).end();
 });
 
 //======================================================================

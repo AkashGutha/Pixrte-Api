@@ -1,6 +1,10 @@
 var User = require('../models/User');
 var seeds = require('../helpers/seedMessages');
 
+//======================================================================
+// Find User by name 
+//======================================================================
+
 function find(name, callback) {
 	User.findOne({
 			username: name
@@ -14,25 +18,45 @@ function find(name, callback) {
 		});
 }
 
-function save(newUser, res) {
+//======================================================================
+// Save a user
+//======================================================================
+
+function save(newUser, callback) {
 	this.find(newUser.username, function (err, user) {
 
-		if (err) throw err;
+		if (err) callback(err, null);
 		if (user) {
-			res.json(seeds.UserExists);
+			callback(null, user);
 		} else {
 			//save 	User.finBthe sample user and send response
 			newUser.save(function (err) {
-				if (err) throw err;
-				res.json(seeds.UserCreated);
+				if (err) callback(err, null);
+				else callback(null, null);
 			});
 		}
 	});
 }
 
+//======================================================================
+// Update a user
+//======================================================================
+
+function update(user, callback) {
+	User.findByIdAndRemove(user._id, callback);
+}
+
+//======================================================================
+// Delete a user
+//======================================================================
+
 function remove(user, callback) {
 	User.findByIdAndRemove(user._id, callback);
 }
+
+//======================================================================
+// Exports
+//======================================================================
 
 
 exports.save = save;

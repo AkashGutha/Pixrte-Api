@@ -37,6 +37,49 @@ orders.get('/my', function (req, res, next) {
 })
 
 //======================================================================
+// POST requests for Orders 
+//======================================================================
+
+orders.post('/:id', function (req, res, next) {
+	if (req.user.isAdmin === true) {
+		OrderDB.getAll(function (err, orders) {
+			if (err) res.status(500).end();
+			else res.status(200).json(orders);
+		});
+	} else res.status(403).json(seeds.NotAuthorized);
+});
+
+
+//======================================================================
+// PUT requests for Orders 
+//======================================================================
+
+orders.put('/:id', function (req, res, next) {
+	if (req.user.isAdmin === true) {
+		OrderDB.getAll(function (err, orders) {
+			if (err) res.status(500).end();
+			else res.status(200).json(orders);
+		});
+	} else res.status(403).json(seeds.NotAuthorized);
+});
+
+
+//======================================================================
+// DELETE requests for Orders 
+//======================================================================
+
+orders.delete('/:id', function (req, res, next) {
+	if (req.user.isAdmin === true) {
+		OrderDB.getAll(function (err, orders) {
+			if (err) res.status(500).end();
+			else res.status(200).json(orders);
+		});
+	} else res.status(403).json(seeds.NotAuthorized);
+});
+
+
+
+//======================================================================
 // Export the route
 //======================================================================
 
