@@ -41,7 +41,6 @@ var userSchema = new Schema({
 // Encryption and Validation helpers
 //======================================================================
 
-
 userSchema.statics.encrypt = function (password) {
 	return bcrypt.hashSync(password);
 };

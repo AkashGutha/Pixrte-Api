@@ -5,11 +5,21 @@ var seeds = require('../../helpers/messages/seedMessages');
 // Get all
 //======================================================================
 
-function getALl(callback) {
-    Template.find({}, function (err, template) {
-        if (err) callback(err, null);
-        else callback(null, template);
-    });
+function getAll(callback) {
+	Template.find({}, function (err, template) {
+		if (err) callback(err, null);
+		else callback(null, template);
+	});
+}
+
+function get(name, callback) {
+	var query = {
+		name: name
+	}
+	Template.findOne(query, function (err, template) {
+		if (err) callback(err, null);
+		else callback(null, template);
+	});
 }
 
 //======================================================================
@@ -17,45 +27,65 @@ function getALl(callback) {
 //======================================================================
 
 function save(template, callback) {
-    var query = {
-        name: template.name
-    }
+	var query = {
+		name: template.name
+	}
 
-    Template.findOne(query, function (err, template) {
-        if (err) callback(err, null);
-        else if (tempmlates) {
-            callback(template, null);
-        } else {
-            Template.save(function (err) {
-                if (err) callback(err, null)
-                else callback(null, null);
-            });
-        }
-    });
+	Template.findOne(query, function (err, template) {
+		if (err) callback(err, null);
+		else if (tempmlates) {
+			callback(template, null);
+		} else {
+			Template.save(function (err) {
+				if (err) callback(err, null)
+				else callback(null, null);
+			});
+		}
+	});
 }
 
 //======================================================================
 // Update a template
 //======================================================================
 
-function save(template, callback) {
+function update(template, newTemplate, callback) {
 
-    var query = {
-        name: template.name
-    }
+	var query = {
+		name: template.name
+	}
 
-    Template.findOne(query, function (err, template) {
-        if (err) callback(err, null);
-        else if (tempmlates) {
-            callback(template, null);
-        } else {
-            Template.save(function (err) {
-                if (err) callback(err, null)
-                else callback(null, null);
-            });
-        }
-    });
+	Template.findOne(query, function (err, template) {
+		if (err) callback(err, null);
+		else if (tempmlate) {
+			Template.save(function (err) {
+				if (err) callback(err, null)
+				else callback(null, null);
+			});
+		}
+	});
 
+}
+
+//======================================================================
+// Delete a template
+//======================================================================
+
+function remove(template, callback) {
+	var query = {
+		name: template.name
+	}
+
+	Template.findOne(query, function (err, template) {
+		if (err) callback(err, null);
+		else if (tempmlates) {
+			callback(template, null);
+		} else {
+			Template.save(function (err) {
+				if (err) callback(err, null)
+				else callback(null, null);
+			});
+		}
+	});
 }
 
 //======================================================================
@@ -63,3 +93,6 @@ function save(template, callback) {
 //======================================================================
 
 exports.getAll = getALl;
+exports.save = save;
+exports.update = update;
+exports.remove = remove;
