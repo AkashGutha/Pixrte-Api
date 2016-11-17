@@ -1,5 +1,5 @@
-var User = require('../models/User');
-var seeds = require('../helpers/seedMessages');
+var User = require('../../models/User');
+var seeds = require('../../helpers/messages/seedMessages');
 
 //======================================================================
 // Find User by name 

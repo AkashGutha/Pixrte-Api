@@ -1,6 +1,6 @@
-var User = require('../models/User');
-var Order = require('../models/Order');
-var seeds = require('../helpers/seedMessages');
+var User = require('../../models/User');
+var Order = require('../../models/Order');
+var seeds = require('../../helpers/messages/seedMessages');
 
 
 //======================================================================
@@ -9,10 +9,10 @@ var seeds = require('../helpers/seedMessages');
 
 function getAll(callback) {
 
-	Order.find({}, function (err, orders) {
-		if (err) callback(err, null);
-		else callback(null, orders);
-	});
+    Order.find({}, function (err, orders) {
+        if (err) callback(err, null);
+        else callback(null, orders);
+    });
 
 }
 
@@ -22,15 +22,15 @@ function getAll(callback) {
 
 function getOrdersByUsername(username, callback) {
 
-	var query = {
-		username: username
-	};
+    var query = {
+        username: username
+    };
 
-	Order.find(query, function (err, orders) {
-		if (err) callback(err, null);
-		else callback(null, orders);
+    Order.find(query, function (err, orders) {
+        if (err) callback(err, null);
+        else callback(null, orders);
 
-	});
+    });
 }
 
 //======================================================================
@@ -39,14 +39,14 @@ function getOrdersByUsername(username, callback) {
 
 function getOrderByNumber(order_no, callback) {
 
-	var query = {
-		order_no: order_no
-	};
+    var query = {
+        order_no: order_no
+    };
 
-	Order.find(query, function (err, orders) {
-		if (err) callback(err, null);
-		else callback(null, orders);
-	});
+    Order.find(query, function (err, orders) {
+        if (err) callback(err, null);
+        else callback(null, orders);
+    });
 }
 
 function postOrderByUsername(username, callback) {

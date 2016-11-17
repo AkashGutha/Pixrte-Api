@@ -1,9 +1,9 @@
 var express = require('express');
 var Users = express.Router();
 
-var UserDB = require('../../helpers/UserDBHelper');
+var UserDB = require('../../helpers/DB/UserDBHelper');
 var User = require('../../models/User');
-var seeds = require('../../helpers/seedMessages');
+var seeds = require('../../helpers/messages/seedMessages');
 
 //======================================================================
 // Include settings file
