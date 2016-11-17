@@ -10,10 +10,10 @@ var TemplateDB = require('../../helpers/DB/TemplateDBHelper');
 //======================================================================
 
 Templates.get('/all', function (req, res, next) {
-    TemplateDB.getAll(function (err, templates) {
-        if (err) res.status(500).end();
-        else res.status(200).json(templates);
-    });
+	TemplateDB.getAll(function (err, templates) {
+		if (err) res.status(500).end();
+		else res.status(200).json(templates);
+	});
 });
 
 
@@ -22,13 +22,13 @@ Templates.get('/all', function (req, res, next) {
 //======================================================================
 
 Templates.post('/:name', function (req, res, next) {
-    if (req.user.isAdmin === true) {
-        TemplateDB.save(function (err, templates) {
-            if (err) res.status(500).end();
-            else if (templates) res.status(500).json(seeds.ResourceExists);
-            else res.status(200).json(seeds.ResourceCreadted);
-        })
-    } else res.status(403).json(seeds.NotAuthorized);
+	if (req.user.isAdmin === true) {
+		TemplateDB.save(function (err, templates) {
+			if (err) res.status(500).end();
+			else if (templates) res.status(500).json(seeds.ResourceExists);
+			else res.status(200).json(seeds.ResourceCreadted);
+		})
+	} else res.status(403).json(seeds.NotAuthorized);
 });
 
 
@@ -38,13 +38,13 @@ Templates.post('/:name', function (req, res, next) {
 //======================================================================
 
 Templates.put('/:name', function (req, res, next) {
-    if (req.user.isAdmin === true) {
-        TemplateDB.save(function (err, templates) {
-            if (err) res.status(500).end();
-            else if (templates) res.status(500).json(seeds.ResourceExists);
-            else res.status(200).json(seeds.ResourceCreadted);
-        })
-    } else res.status(403).json(seeds.NotAuthorized);
+	if (req.user.isAdmin === true) {
+		TemplateDB.save(function (err, templates) {
+			if (err) res.status(500).end();
+			else if (templates) res.status(500).json(seeds.ResourceExists);
+			else res.status(200).json(seeds.ResourceCreadted);
+		})
+	} else res.status(403).json(seeds.NotAuthorized);
 });
 
 //======================================================================
@@ -52,13 +52,13 @@ Templates.put('/:name', function (req, res, next) {
 //======================================================================
 
 Templates.delete('/:name', function (req, res, next) {
-    if (req.user.isAdmin === true) {
-        TemplateDB.save(function (err, templates) {
-            if (err) res.status(500).end();
-            else if (templates) res.status(500).json(seeds.ResourceExists);
-            else res.status(200).json(seeds.ResourceCreadted);
-        })
-    } else res.status(403).json(seeds.NotAuthorized);
+	if (req.user.isAdmin === true) {
+		TemplateDB.save(function (err, templates) {
+			if (err) res.status(500).end();
+			else if (templates) res.status(500).json(seeds.ResourceExists);
+			else res.status(200).json(seeds.ResourceCreadted);
+		})
+	} else res.status(403).json(seeds.NotAuthorized);
 });
 
 
