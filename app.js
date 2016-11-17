@@ -10,6 +10,7 @@ var cookieParser = require('cookie-parser');
 var bodyParser = require('body-parser');
 var mongoose = require('mongoose');
 var jwt = require('jsonwebtoken');
+var TCO = require('2checkout-node');
 
 var index = require('./routes/index');
 var apiRoute = require('./routes/api');
@@ -21,7 +22,6 @@ var app = express();
 //======================================================================
 
 var settings = require('./config/settings.json');
-
 
 //======================================================================
 // Database connections
@@ -45,7 +45,6 @@ app.use(bodyParser.urlencoded({
 }));
 app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
-
 
 //======================================================================
 // Routes injection
