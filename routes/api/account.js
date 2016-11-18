@@ -99,7 +99,11 @@ Account.post('/signup', function (req, res, next) {
 		isAdmin: false
 	});
 
-	UserDB.save(newUser, res);
+	UserDB.save(newUser, function (err, user) {
+		if (err) res.status(500).end();
+		else if (user) res.status(403).json(seeds.UserExists);
+		else res.status(200).json(seeds.UserCreated);
+	});
 });
 
 
