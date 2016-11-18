@@ -11,7 +11,6 @@ function get(name, callback) {
 		name: name
 	}
 	Template.findOne(query, function (err, template) {
-		console.log(err);
 		if (err) callback(err, null);
 		else callback(null, template);
 	});
