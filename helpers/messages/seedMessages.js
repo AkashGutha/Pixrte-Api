@@ -74,6 +74,11 @@ exports.NotAuthorized = {
 // Extras
 //======================================================================
 
+exports.ResourceNotFound = {
+	success: false,
+	message: 'Rescource Not found'
+};
+
 exports.ResourceExists = {
 	success: false,
 	message: 'Rescource already exists'
