@@ -22,6 +22,10 @@ exports.UserCreated = {
 	message: 'User created sucesfully'
 };
 
+exports.UseUpdated = {
+	success: true,
+	message: 'User details updated sucesfully'
+};
 exports.MissingCredentials = {
 	success: false,
 	message: 'Missing credentials'
