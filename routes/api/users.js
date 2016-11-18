@@ -15,44 +15,50 @@ var settings = require('../../config/settings.json');
 // GET requests for Users
 //======================================================================
 
-Users.get('/all', function (req, res, next) {
-	console.log('all called');
-	if (req.user.isAdmin === true) {
+Users.get('/', function (req, res, next) {
 
-		UserDB.findAll(function (err, users) {
-			if (err)
-				res.status(500).end();
-			else res.status(200).json(users);
-		});
-	} else res.status(403).json(seeds.NotAuthorized);
+	// if query is empty.
+	if (!req.query.name) res.status(400).end();
 
-});
+	// if the request name is all
+	else if (req.query.name == "all") {
+		if (req.user.isAdmin === true) {
 
-Users.get('/me', function (req, res, next) {
-	console.log('my called');
-	UserDB.find(req.user.username, function (err, user) {
-		if (err)
-			res.status(500).end();
-		if (user)
-			res.status(200).json(user);
-		else res.status(403).json(seeds.UserNotFound);
-	});
-});
+			UserDB.findAll(function (err, users) {
+				if (err)
+					res.status(500).end();
+				else res.status(200).json(users);
+			});
+		} else res.status(403).json(seeds.NotAuthorized);
+	}
 
-Users.get('/:username', function (req, res, next) {
-	if (req.user.username === req.params.username || req.user.isAdmin === true) {
-
-		UserDB.find(req.params.username, function (err, user) {
+	// if the request name is me
+	else if (req.query.name == "me") {
+		UserDB.find(req.user.username, function (err, user) {
 			if (err)
 				res.status(500).end();
 			if (user)
 				res.status(200).json(user);
 			else res.status(403).json(seeds.UserNotFound);
 		});
-	} else if (req.user.username !== req.params.username) {
-		res.status(403).json(seeds.NotAuthorized);
-	} else {
-		res.status(500).end();
+	}
+
+	// if the request name is a anything else
+	else {
+		console.log(req.query);
+		if (req.user.username === req.query.name || req.user.isAdmin === true) {
+			UserDB.find(req.query.name, function (err, user) {
+				if (err)
+					res.status(500).end();
+				if (user)
+					res.status(200).json(user);
+				else res.status(403).json(seeds.UserNotFound);
+			});
+		} else if (req.user.username !== req.query.name) {
+			res.status(403).json(seeds.NotAuthorized);
+		} else {
+			res.status(500).end();
+		}
 	}
 });
 
