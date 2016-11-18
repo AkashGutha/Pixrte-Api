@@ -5,6 +5,7 @@ var Order = require('../../models/Order');
 var seeds = require('../../helpers/messages/seedMessages');
 
 var OrderDB = require('../../helpers/DB/OrderDBHelper');
+var OrderValidator = require('../../helpers/DataValidators/OrderDataValidator');
 
 //======================================================================
 // GET requests for Orders 

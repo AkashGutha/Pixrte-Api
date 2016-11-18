@@ -5,6 +5,8 @@ var UserDB = require('../../helpers/DB/UserDBHelper');
 var User = require('../../models/User');
 var seeds = require('../../helpers/messages/seedMessages');
 
+var UserValidator = require('../../helpers/DataValidators/UserDataValidator');
+
 //======================================================================
 // Include settings file
 //======================================================================

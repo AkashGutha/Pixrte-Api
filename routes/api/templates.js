@@ -5,6 +5,8 @@ var seeds = require('../../helpers/messages/seedMessages');
 var Template = require('../../models/Template');
 var TemplateDB = require('../../helpers/DB/TemplateDBHelper');
 
+var TemplateValidator = require('../../helpers/DataValidators/TemplateDataValidator');
+
 //======================================================================
 // GET requests
 //======================================================================
