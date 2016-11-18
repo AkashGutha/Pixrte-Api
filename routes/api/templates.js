@@ -11,20 +11,24 @@ var TemplateDB = require('../../helpers/DB/TemplateDBHelper');
 
 Templates.get('/', function (req, res, next) {
 
-	if (req.query.name) {
+	// if query is empty.
+	if (!req.query.name) res.status(400).end();
 
+	// if the request name is all
+	else if (req.query.name == "all") {
+		TemplateDB.getAll(function (err, templates) {
+			if (err) res.status(500).end();
+			else res.status(200).json(templates);
+		});
+	}
+
+	// if the request name is a anything else
+	else {
 		TemplateDB.get(req.query.name, function (err, template) {
 			if (err) res.status(500).end();
 			else if (template) res.status(200).json(template);
 			else res.status(400).json(seeds.ResourceNotFound);
 		});
-
-	} else {
-		TemplateDB.getAll(function (err, templates) {
-			if (err) res.status(500).end();
-			else res.status(200).json(templates);
-		});
-
 	}
 });
 
