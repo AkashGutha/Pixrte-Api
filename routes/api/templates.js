@@ -9,11 +9,23 @@ var TemplateDB = require('../../helpers/DB/TemplateDBHelper');
 // GET requests
 //======================================================================
 
-Templates.get('/all', function (req, res, next) {
-	TemplateDB.getAll(function (err, templates) {
-		if (err) res.status(500).end();
-		else res.status(200).json(templates);
-	});
+Templates.get('/', function (req, res, next) {
+
+	if (req.query.name) {
+
+		TemplateDB.get(req.query.name, function (err, template) {
+			if (err) res.status(500).end();
+			else if (template) res.status(200).json(template);
+			else res.status(400).json(seeds.ResourceNotFound);
+		});
+
+	} else {
+		TemplateDB.getAll(function (err, templates) {
+			if (err) res.status(500).end();
+			else res.status(200).json(templates);
+		});
+
+	}
 });
 
 
