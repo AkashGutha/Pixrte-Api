@@ -10,30 +10,58 @@ var OrderDB = require('../../helpers/DB/OrderDBHelper');
 // GET requests for Orders 
 //======================================================================
 
-Orders.get('/all', function (req, res, next) {
-    if (req.user.isAdmin === true) {
-        OrderDB.getAll(function (err, orders) {
-            if (err) res.status(500).end();
-            else res.status(200).json(orders);
-        });
-    } else res.status(403).json(seeds.NotAuthorized);
-});
+Orders.get('/', function (req, res, next) {
 
-Orders.get('/my', function (req, res, next) {
-    OrderDB.get(req.user.username, function (err, orders) {
-        if (err) res.status(500).end();
-        else res.status(200).json(orders);
-    });
+	// if the query is empty send bad request reposnse.
+	if (!req.query.id) res.status(400).end();
+
+	// if queried for all
+	else if (req.query.id === "all") {
+
+		if (req.user.isAdmin === true) {
+			OrderDB.getAll(function (err, orders) {
+				if (err) res.status(500).end();
+				else res.status(200).json(orders);
+			});
+		} else res.status(403).json(seeds.NotAuthorized);
+	}
+
+	// if queried for the specidfic user
+	else if (req.query.id === "me") {
+
+		if (req.user.isAdmin === true) {
+			OrderDB.get(req.user.username, function (err, orders) {
+				if (err) res.status(500).end();
+				else res.status(200).json(orders);
+			});
+		} else res.status(403).json(seeds.NotAuthorized);
+	}
+
+	// if queried for id get that order
+	else if (req.query.id) {
+
+		if (req.user.isAdmin === true || req.user.orders) {
+			OrderDB.getByNumber(req.params.id, function (err, orders) {
+				if (err) res.status(500).end();
+				else res.status(200).json(orders);
+			});
+		} else res.status(403).json(seeds.NotAuthorized);
+
+	}
+
+	// if queried for username get all the orders for him.
+	else if (req.query.username) {
+
+	}
+
+	// if nothing matches send an internal server error.
+	else res.status(500).end();
+
 });
 
 Orders.get('/:id', function (req, res, next) {
-    var ab = req.user.orders;
-    if (req.user.isAdmin === true || req.user.orders) {
-        OrderDB.getByNumber(req.params.id, function (err, orders) {
-            if (err) res.status(500).end();
-            else res.status(200).json(orders);
-        });
-    } else res.status(403).json(seeds.NotAuthorized);
+	var ab = req.user.orders;
+
 });
 
 //======================================================================
@@ -41,12 +69,12 @@ Orders.get('/:id', function (req, res, next) {
 //======================================================================
 
 Orders.post('/:id', function (req, res, next) {
-    if (req.user.isAdmin === true) {
-        OrderDB.getAll(function (err, orders) {
-            if (err) res.status(500).end();
-            else res.status(200).json(orders);
-        });
-    } else res.status(403).json(seeds.NotAuthorized);
+	if (req.user.isAdmin === true) {
+		OrderDB.getAll(function (err, orders) {
+			if (err) res.status(500).end();
+			else res.status(200).json(orders);
+		});
+	} else res.status(403).json(seeds.NotAuthorized);
 });
 
 
@@ -55,12 +83,12 @@ Orders.post('/:id', function (req, res, next) {
 //======================================================================
 
 Orders.put('/:id', function (req, res, next) {
-    if (req.user.isAdmin === true) {
-        OrderDB.getAll(function (err, orders) {
-            if (err) res.status(500).end();
-            else res.status(200).json(orders);
-        });
-    } else res.status(403).json(seeds.NotAuthorized);
+	if (req.user.isAdmin === true) {
+		OrderDB.getAll(function (err, orders) {
+			if (err) res.status(500).end();
+			else res.status(200).json(orders);
+		});
+	} else res.status(403).json(seeds.NotAuthorized);
 });
 
 
@@ -69,12 +97,12 @@ Orders.put('/:id', function (req, res, next) {
 //======================================================================
 
 Orders.delete('/:id', function (req, res, next) {
-    if (req.user.isAdmin === true) {
-        OrderDB.getAll(function (err, orders) {
-            if (err) res.status(500).end();
-            else res.status(200).json(orders);
-        });
-    } else res.status(403).json(seeds.NotAuthorized);
+	if (req.user.isAdmin === true) {
+		OrderDB.getAll(function (err, orders) {
+			if (err) res.status(500).end();
+			else res.status(200).json(orders);
+		});
+	} else res.status(403).json(seeds.NotAuthorized);
 });
 
 

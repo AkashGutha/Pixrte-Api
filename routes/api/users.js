@@ -21,7 +21,7 @@ Users.get('/', function (req, res, next) {
 	if (!req.query.name) res.status(400).end();
 
 	// if the request name is all
-	else if (req.query.name == "all") {
+	else if (req.query.name === "all") {
 		if (req.user.isAdmin === true) {
 
 			UserDB.findAll(function (err, users) {
@@ -33,7 +33,7 @@ Users.get('/', function (req, res, next) {
 	}
 
 	// if the request name is me
-	else if (req.query.name == "me") {
+	else if (req.query.name === "me") {
 		UserDB.find(req.user.username, function (err, user) {
 			if (err)
 				res.status(500).end();
@@ -45,7 +45,6 @@ Users.get('/', function (req, res, next) {
 
 	// if the request name is a anything else
 	else {
-		console.log(req.query);
 		if (req.user.username === req.query.name || req.user.isAdmin === true) {
 			UserDB.find(req.query.name, function (err, user) {
 				if (err)

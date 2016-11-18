@@ -15,7 +15,7 @@ Templates.get('/', function (req, res, next) {
 	if (!req.query.name) res.status(400).end();
 
 	// if the request name is all
-	else if (req.query.name == "all") {
+	else if (req.query.name === "all") {
 		TemplateDB.getAll(function (err, templates) {
 			if (err) res.status(500).end();
 			else res.status(200).json(templates);
