@@ -20,62 +20,63 @@ var settings = require('../../config/settings.json');
 
 Account.post('/signin', function (req, res, next) {
 
-    if (!(req.body.username !== undefined && req.body.password !== undefined)) {
-        res.json(seeds.MissingCredentials);
-        return;
-    }
+	if (!(req.body.username !== undefined && req.body.password !== undefined)) {
+		res.json(seeds.MissingCredentials);
+		return;
+	}
 
-    //create a sample user.
-    var newUser = new User({
-        username: req.body.username,
-        password: req.body.password
-    });
+	//create a user.
+	var newUser = new User({
+		username: req.body.username,
+		password: req.body.password
+	});
 
 
-    User.findOne({
-        username: newUser.username
-    }, function (err, user) {
+	User.findOne({
+		username: newUser.username
+	}, function (err, user) {
 
-        if (err) throw err;
+		if (err) throw err;
 
-        if (!user) {
-            res.json(seeds.UserNotFound);
+		if (!user) {
+			res.json(seeds.UserNotFound);
 
-        } else if (user) {
+		} else if (user) {
 
-            // check if password matches
-            if (!User.validate(newUser.password, user.password)) {
-                res.json(seeds.PasswordMatchFailure);
-            } else {
+			// check if password matches
+			if (!User.validate(newUser.password, user.password)) {
+				res.json(seeds.PasswordMatchFailure);
+			} else {
 
-                var body = {
-                    username: user.username,
-                    isAdmin: user.isAdmin
-                };
+				var body = {
+					username: user.username,
+					isAdmin: user.isAdmin,
+					id: user._id
+				};
 
-                // if user is found and password is right
-                // create a token
-                var token = new Token({
-                    value: jwt.sign(body, settings.Secret, {
-                        expiresIn: settings.expirationTime // expires in 1 hour
-                    }),
-                    username: user.username
-                });
+				// if user is found and password is right
+				// create a token
+				var token = new Token({
+					value: jwt.sign(body, settings.Secret, {
+						expiresIn: settings.expirationTime // expires in 1 hour
+					}),
+					username: user.username
+				});
 
-                //save the  token
-                Token.findOne(body, function (err, prevToken) {
-                    if (err) throw err;
-                    if (prevToken) {
-                        prevToken.remove(body);
-                    }
-                    token.save();
-                });
+				//save the  token
+				Token.findOne(body, function (err, prevToken) {
+					if (err) throw err;
+					if (prevToken) {
+						prevToken.remove(body);
+					}
+					token.save();
+				});
 
-                // return the information including token as JSON
-                res.json(seeds.TokenCreated(token.value));
-            }
-        }
-    });
+				// return the information including token as JSON
+				res.json(seeds.TokenCreated(token.value));
+			}
+		}
+	});
 });
 
 
@@ -85,20 +86,20 @@ Account.post('/signin', function (req, res, next) {
 
 Account.post('/signup', function (req, res, next) {
 
-    if (!(req.body.username !== undefined && req.body.password !== undefined && req.body.email !== undefined)) {
-        res.json(seeds.MissingCredentials);
-        return;
-    }
+	if (!(req.body.username !== undefined && req.body.password !== undefined && req.body.email !== undefined)) {
+		res.json(seeds.MissingCredentials);
+		return;
+	}
 
-    //create a sample user.
-    var newUser = new User({
-        username: req.body.username,
-        password: User.encrypt(req.body.password),
-        email: req.body.email,
-        isAdmin: false
-    });
+	//create a sample user.
+	var newUser = new User({
+		username: req.body.username,
+		password: User.encrypt(req.body.password),
+		email: req.body.email,
+		isAdmin: false
+	});
 
-    UserDB.save(newUser, res);
+	UserDB.save(newUser, res);
 });
 
 
@@ -108,15 +109,15 @@ Account.post('/signup', function (req, res, next) {
 
 Account.post('/signout', function (req, res, next) {
 
-    // check header or url parameters or post parameters for token
-    var token = req.headers['x-access-token'];
-    if (token) Token.remove({
-        value: token
-    }, function (err) {
-        if (err) res.status(500).end();
-        else res.status(200);
-    });
-    res.status(500).end();
+	// check header or url parameters or post parameters for token
+	var token = req.headers['x-access-token'];
+	if (token) Token.remove({
+		value: token
+	}, function (err) {
+		if (err) res.status(500).end();
+		else res.status(200);
+	});
+	res.status(500).end();
 });
 
 //======================================================================
