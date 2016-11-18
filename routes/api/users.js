@@ -70,7 +70,16 @@ Users.get('/', function (req, res, next) {
 
 Users.put('/:username', function (req, res, next) {
 
-	res.status(500).end();
+	var newData = req.body;
+
+	//validate the new Data //code here
+
+	//if valid update the user data
+	UserDB.update(req.user, newData, function (err) {
+		if (err) res.status(400).end();
+		else res.status(200).json(seeds.UseUpdated);
+	});
+
 });
 
 //======================================================================
