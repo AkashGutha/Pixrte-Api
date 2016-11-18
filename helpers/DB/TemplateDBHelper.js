@@ -2,8 +2,20 @@ var Template = require('../../models/Template');
 var seeds = require('../../helpers/messages/seedMessages');
 
 //======================================================================
-// Get all
+// Get template functions
 //======================================================================
+
+function get(name, callback) {
+
+	var query = {
+		name: name
+	}
+	Template.findOne(query, function (err, template) {
+		console.log(err);
+		if (err) callback(err, null);
+		else callback(null, template);
+	});
+}
 
 function getAll(callback) {
 	Template.find({}, function (err, template) {
@@ -12,15 +24,6 @@ function getAll(callback) {
 	});
 }
 
-function get(name, callback) {
-	var query = {
-		name: name
-	}
-	Template.findOne(query, function (err, template) {
-		if (err) callback(err, null);
-		else callback(null, template);
-	});
-}
 
 //======================================================================
 // Save a template
@@ -92,6 +95,7 @@ function remove(template, callback) {
 // Exports
 //======================================================================
 
+exports.get = get;
 exports.getAll = getAll;
 exports.save = save;
 exports.update = update;
