@@ -2,5 +2,5 @@
 	"Name": "Pixrte",
 	"ConnectionUrl": "mongodb://localhost:27017/pixrte",
 	"Secret": "thesceret",
-	"expirationTime": 3600
+	"expirationTime": 86400
 }
