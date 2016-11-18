@@ -92,7 +92,7 @@ function remove(template, callback) {
 // Exports
 //======================================================================
 
-exports.getAll = getALl;
+exports.getAll = getAll;
 exports.save = save;
 exports.update = update;
 exports.remove = remove;
