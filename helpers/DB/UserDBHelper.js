@@ -42,9 +42,10 @@ function save(newUser, callback) {
 
 		if (err) callback(err, null);
 		if (user) {
+			console.log(user);
 			callback(null, user);
 		} else {
-			//save 	User.finBthe sample user and send response
+			//save 	User
 			newUser.save(function (err) {
 				if (err) callback(err, null);
 				else callback(null, null);
