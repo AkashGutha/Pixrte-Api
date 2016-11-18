@@ -42,7 +42,6 @@ function save(newUser, callback) {
 
 		if (err) callback(err, null);
 		if (user) {
-			console.log(user);
 			callback(null, user);
 		} else {
 			//save 	User
@@ -58,8 +57,18 @@ function save(newUser, callback) {
 // Update a user
 //======================================================================
 
-function update(user, callback) {
-	User.findByIdAndRemove(user._id, callback);
+function update(user, newData, callback) {
+
+	this.find(user.username, function (err, user) {
+
+		if (err) callback(err);
+
+		user.save(function (err) {
+			if (err) callback(err);
+			else callback(null);
+		});
+
+	});
 }
 
 //======================================================================
@@ -77,5 +86,6 @@ function remove(user, callback) {
 
 exports.save = save;
 exports.find = find;
+exports.update = update;
 exports.remove = remove;
 exports.findAll = findAll;
