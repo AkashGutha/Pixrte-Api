@@ -8,6 +8,8 @@ var seeds = require('../../helpers/messages/seedMessages');
 var User = require('../../models/User');
 var Token = require('../../models/Token');
 
+var UserValidator = require('../../helpers/DataValidators/UserDataValidator');
+
 //======================================================================
 // Include settings file
 //======================================================================
@@ -27,7 +29,7 @@ Account.post('/signin', function (req, res, next) {
 
 	//create a user.
 	var newUser = new User({
-		username: req.body.username,
+		username: req.body.username.toLowerCase(),
 		password: req.body.password
 	});
 
@@ -87,13 +89,32 @@ Account.post('/signin', function (req, res, next) {
 Account.post('/signup', function (req, res, next) {
 
 	if (!(req.body.username !== undefined && req.body.password !== undefined && req.body.email !== undefined)) {
-		res.json(seeds.MissingCredentials);
+		res.status(400).json(seeds.MissingCredentials);
 		return;
 	}
 
+	//validate username 
+	if (!UserValidator.validateUsername(req.body.username.toLowerCase())) {
+		res.status(400).json(seeds.UsernameValidationError);
+		return;
+	}
+
+	//validate username 
+	if (!UserValidator.validatePassword(req.body.password)) {
+		res.status(400).json(seeds.UsernameValidationError);
+		return;
+	}
+
+	//validate username 
+	if (!UserValidator.validateEmail(req.body.email)) {
+		res.status(400).json(seeds.UsernameValidationError);
+		return;
+	}
+
+
 	//create a sample user.
 	var newUser = new User({
-		username: req.body.username,
+		username: req.body.username.toLowerCase(),
 		password: User.encrypt(req.body.password),
 		email: req.body.email,
 		isAdmin: false
