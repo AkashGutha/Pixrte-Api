@@ -31,15 +31,15 @@ api.use('/account', accountRoute);
 
 api.post('/setup', function (req, res, next) {
 
-    //create a sample user.
-    var newUser = new User({
-        username: "akash1",
-        email: "akash.gutha@outlook.com",
-        password: User.encrypt("password"),
-        isAdmin: true
-    });
+	//create a sample user.
+	var newUser = new User({
+		username: "akash1",
+		email: "akash.gutha@outlook.com",
+		password: User.encrypt("password"),
+		isAdmin: true
+	});
 
-    UserDB.save(newUser, res);
+	UserDB.save(newUser, res);
 });
 
 //======================================================================
@@ -49,38 +49,38 @@ api.post('/setup', function (req, res, next) {
 // web token check
 api.use(function (req, res, next) {
 
-    if (req.originalUrl.includes('/api/account')) {
-        next();
-    } else {
+	if (req.originalUrl.includes('/api/account')) {
+		next();
+	} else {
 
-        // check header or url parameters or post parameters for token
-        var token = req.body.token || req.query.token || req.headers['x-access-token'];
+		// check header or url parameters or post parameters for token
+		var token = req.body.token || req.query.token || req.headers['x-access-token'];
 
-        if (token) {
-            jwt.verify(token, settings.Secret, function (err, decoded) {
-                if (err) {
-                    return res.status(403).json(seeds.TokenAuthFailed);
-                } else {
+		if (token) {
+			jwt.verify(token, settings.Secret, function (err, decoded) {
+				if (err) {
+					return res.status(403).json(seeds.TokenAuthFailed);
+				} else {
 
-                    UserDB.find(decoded.username, function (err, user) {
-                        if (err) {
-                            return res.status(403).json(seeds.TokenAuthFailed);
-                        } else {
-                            req.token = token;
-                            req.user = user;
-                            next();
-                        }
-                    });
+					UserDB.find(decoded.username, function (err, user) {
+						if (err) {
+							return res.status(403).json(seeds.TokenAuthFailed);
+						} else {
+							req.token = token;
+							req.user = user;
+							next();
+						}
+					});
 
-                    // req.token = token;
-                    // next();
-                }
-            });
-        } else {
-            // return an error if no token is found
-            return res.status(403).send(seeds.TokenNotFound);
-        }
-    }
+					// req.token = token;
+					// next();
+				}
+			});
+		} else {
+			// return an error if no token is found
+			return res.status(403).send(seeds.TokenNotFound);
+		}
+	}
 
 });
 
@@ -98,9 +98,9 @@ api.use('/templates', templateRoute);
 //======================================================================
 
 api.get('/', function (req, res, next) {
-    res.send({
-        message: "Welcome to pixrte api endpoint !"
-    });
+	res.send({
+		message: "Welcome to pixrte api endpoint !"
+	});
 });
 
 //======================================================================
