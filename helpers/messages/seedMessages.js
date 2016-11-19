@@ -22,10 +22,16 @@ exports.UserCreated = {
 	message: 'User created sucesfully'
 };
 
-exports.UseUpdated = {
+exports.UserUpdated = {
 	success: true,
 	message: 'User details updated sucesfully'
 };
+
+exports.UsernameValidationError = {
+	success: true,
+	message: 'User name validation error'
+};
+
 
 exports.MissingCredentials = {
 	success: false,
