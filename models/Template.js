@@ -6,17 +6,16 @@ var Schema = mongoose.Schema;
 //======================================================================
 
 var templateSchema = new Schema({
-	name: {
-		type: String,
-		required: true,
-		index: true,
-		unique: true
-	},
-	price: {
-		type: Number,
-		required: true
-	},
-	details: Schema.Types.Mixed
+    name: {
+        type: String,
+        required: true,
+        unique: true
+    },
+    price: {
+        type: Number,
+        required: true
+    },
+    details: Schema.Types.Mixed
 
 });
 
