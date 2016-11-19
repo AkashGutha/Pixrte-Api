@@ -85,7 +85,7 @@ function update(username, newUser, callback) {
 
 function remove(username, callback) {
 	var query = {
-		name: name
+		username: username
 	}
 
 	User.findOneAndRemove(query, function (err, user) {
