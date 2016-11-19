@@ -3,7 +3,7 @@ var password_regex = /^[A-Za-z0-9!@#$%^&*()_]{6,20}$/;
 var email_regex = /^([\w-]+(?:\.[\w-]+)*)@((?:[\w-]+\.)*\w[\w-]{0,66})\.([a-z]{2,6}(?:\.[a-z]{2})?)$/i;
 
 function validateUsername(name) {
-	return name_regex.test(name);
+	return username_regex.test(name);
 }
 
 function validatePassword(password) {
