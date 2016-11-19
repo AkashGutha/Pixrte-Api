@@ -23,70 +23,43 @@ function getAll(callback) {
 	});
 }
 
-
 //======================================================================
 // Save a template
 //======================================================================
 
-function save(template, callback) {
-	var query = {
-		name: template.name
-	}
-
-	Template.findOne(query, function (err, template) {
-		if (err) callback(err, null);
-		else if (tempmlates) {
-			callback(template, null);
-		} else {
-			Template.save(function (err) {
-				if (err) callback(err, null)
-				else callback(null, null);
-			});
-		}
-	});
-}
-
-//======================================================================
-// Update a template
-//======================================================================
-
-function update(template, newTemplate, callback) {
+function save(name, newTemplate, callback) {
 
 	var query = {
-		name: template.name
+		name: name
+	}
+	var options = {
+		new: true,
+		upsert: true,
+		runValidators: true,
+		maxTimeMS: 1000
 	}
 
-	Template.findOne(query, function (err, template) {
+	Template.findOneAndUpdate(query, newTemplate, options, function (err, template) {
+		console.log(err);
 		if (err) callback(err, null);
-		else if (tempmlate) {
-			Template.save(function (err) {
-				if (err) callback(err, null)
-				else callback(null, null);
-			});
-		}
+		callback(null, template)
 	});
-
 }
 
 //======================================================================
 // Delete a template
 //======================================================================
 
-function remove(template, callback) {
+function remove(name, callback) {
 	var query = {
-		name: template.name
+		name: name
 	}
 
-	Template.findOne(query, function (err, template) {
+	Template.findOneAndRemove(query, function (err, template) {
+
 		if (err) callback(err, null);
-		else if (tempmlates) {
-			callback(template, null);
-		} else {
-			Template.save(function (err) {
-				if (err) callback(err, null)
-				else callback(null, null);
-			});
-		}
+		else callback(null, template);
+
 	});
 }
 
@@ -97,5 +70,4 @@ function remove(template, callback) {
 exports.get = get;
 exports.getAll = getAll;
 exports.save = save;
-exports.update = update;
 exports.remove = remove;
