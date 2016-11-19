@@ -49,9 +49,69 @@ function getOrderByNumber(order_no, callback) {
 	});
 }
 
-function update(username, callback) {
+//======================================================================
+// Save an order
+//======================================================================
 
+function save(order, callback) {
+
+	this.find(order.order_no, function (err, user) {
+
+		if (err) callback(err, null);
+		if (user) {
+			callback(null, user);
+		} else {
+			//save 	User
+			order.save(function (err) {
+				if (err) callback(err, null);
+				else callback(null, null);
+			});
+		}
+	});
 }
+
+
+//======================================================================
+// Update a user
+//======================================================================
+
+function update(username, order, callback) {
+
+	var query = {
+		username: username
+	}
+
+	var options = {
+		new: true,
+		upsert: true,
+		runValidators: true,
+		maxTimeMS: 1000
+	}
+
+	User.findOneAndUpdate(query, order, options, function (err, user) {
+		console.log(err);
+		if (err) callback(err, null);
+		callback(null, user)
+	});
+}
+
+//======================================================================
+// Delete a user
+//======================================================================
+
+function remove(username, callback) {
+	var query = {
+		username: username
+	}
+
+	User.findOneAndRemove(query, function (err, user) {
+
+		if (err) callback(err, null);
+		else callback(null, user);
+
+	});
+}
+
 
 //======================================================================
 // Exports
