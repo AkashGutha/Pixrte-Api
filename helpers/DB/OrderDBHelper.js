@@ -49,7 +49,7 @@ function getOrderByNumber(order_no, callback) {
 	});
 }
 
-function updateOrder(username, callback) {
+function update(username, callback) {
 
 }
 
@@ -60,4 +60,4 @@ function updateOrder(username, callback) {
 exports.get = getOrdersByUsername;
 exports.getByNumber = getOrderByNumber;
 exports.getAll = getAll;
-exports.update = updateOrder;
+exports.update = update;
