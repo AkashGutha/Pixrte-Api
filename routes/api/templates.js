@@ -39,42 +39,43 @@ Templates.get('/', function (req, res, next) {
 // POST requests
 //======================================================================
 
-Templates.post('/:name', function (req, res, next) {
+Templates.post('/', function (req, res, next) {
+
 	if (req.user.isAdmin === true) {
-		TemplateDB.save(function (err, templates) {
+		TemplateDB.save(req.body.name, req.body, function (err, template) {
 			if (err) res.status(500).end();
-			else if (templates) res.status(500).json(seeds.ResourceExists);
-			else res.status(200).json(seeds.ResourceCreadted);
+			else if (template) res.status(200).json(seeds.ResourceCreadted);
+			else res.status(500).json(seeds.ResourceExists);
 		})
 	} else res.status(403).json(seeds.NotAuthorized);
+
 });
-
-
 
 //======================================================================
 // PUT requests
 //======================================================================
 
-Templates.put('/:name', function (req, res, next) {
+Templates.put('/', function (req, res, next) {
 	if (req.user.isAdmin === true) {
-		TemplateDB.save(function (err, templates) {
+		TemplateDB.save(req.body.name, req.body, function (err, template) {
 			if (err) res.status(500).end();
-			else if (templates) res.status(500).json(seeds.ResourceExists);
-			else res.status(200).json(seeds.ResourceCreadted);
+			else if (template) res.status(500).json(seeds.ResourceUpdated);
+			else res.status(400).end();
 		})
 	} else res.status(403).json(seeds.NotAuthorized);
+
 });
 
 //======================================================================
 // DELETE requests
 //======================================================================
 
-Templates.delete('/:name', function (req, res, next) {
+Templates.delete('/', function (req, res, next) {
 	if (req.user.isAdmin === true) {
-		TemplateDB.save(function (err, templates) {
-			if (err) res.status(500).end();
-			else if (templates) res.status(500).json(seeds.ResourceExists);
-			else res.status(200).json(seeds.ResourceCreadted);
+		TemplateDB.remove(req.query.name, function (err, template) {
+			if (err) res.status(500).json(err);
+			else if (template) res.status(200).json(seeds.ResourceRemoved);
+			else res.status(400).json(seeds.ResourceNotFound);
 		})
 	} else res.status(403).json(seeds.NotAuthorized);
 });
