@@ -38,6 +38,7 @@ function findAll(callback) {
 //======================================================================
 
 function save(newUser, callback) {
+
 	this.find(newUser.username, function (err, user) {
 
 		if (err) callback(err, null);
@@ -53,21 +54,28 @@ function save(newUser, callback) {
 	});
 }
 
+
 //======================================================================
 // Update a user
 //======================================================================
 
-function update(user, newData, callback) {
+function update(username, newUser, callback) {
 
-	this.find(user.username, function (err, user) {
+	var query = {
+		username: username
+	}
 
-		if (err) callback(err);
+	var options = {
+		new: true,
+		upsert: true,
+		runValidators: true,
+		maxTimeMS: 1000
+	}
 
-		user.save(function (err) {
-			if (err) callback(err);
-			else callback(null);
-		});
-
+	User.findOneAndUpdate(query, newUser, options, function (err, user) {
+		console.log(err);
+		if (err) callback(err, null);
+		callback(null, user)
 	});
 }
 
@@ -75,8 +83,17 @@ function update(user, newData, callback) {
 // Delete a user
 //======================================================================
 
-function remove(user, callback) {
-	User.findByIdAndRemove(user._id, callback);
+function remove(username, callback) {
+	var query = {
+		name: name
+	}
+
+	User.findOneAndRemove(query, function (err, user) {
+
+		if (err) callback(err, null);
+		else callback(null, user);
+
+	});
 }
 
 //======================================================================
@@ -84,8 +101,8 @@ function remove(user, callback) {
 //======================================================================
 
 
-exports.save = save;
 exports.find = find;
+exports.findAll = findAll;
+exports.save = save;
 exports.update = update;
 exports.remove = remove;
-exports.findAll = findAll;
