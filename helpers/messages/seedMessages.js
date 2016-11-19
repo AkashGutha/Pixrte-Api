@@ -96,6 +96,16 @@ exports.ResourceExists = {
 };
 
 exports.ResourceCreadted = {
-	success: false,
-	message: 'Rescource created exists'
+	success: true,
+	message: 'Rescource created'
+};
+
+exports.ResourceUpdated = {
+	success: true,
+	message: 'Rescource updated'
+};
+
+exports.ResourceRemoved = {
+	success: true,
+	message: 'Rescource removed'
 };
